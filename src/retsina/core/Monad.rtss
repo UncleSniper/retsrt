@@ -1,0 +1,10 @@
+provide retsina.core.Monad
+__intrin
+
+pub mod retsina.core {
+
+	pub class Monad
+		MonadicTC: forall ElementT: Type: TypeP ElementT -> TypeP (Monad MonadicTC ElementT),
+		EncapsulatedT: Type
+
+}
