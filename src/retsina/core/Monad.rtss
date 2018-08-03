@@ -1,10 +1,39 @@
 provide retsina.core.Monad
 __intrin
 
-pub mod retsina.core {
+mod retsina.core {
 
-	pub class Monad
-		MonadicTC: forall ElementT: Type: TypeP ElementT -> TypeP (Monad MonadicTC ElementT),
-		EncapsulatedT: Type
+	pub fun MonadConstructor
+		MonadicTC: forall ElementT: Type: TypeP ElementT -> TypeP (Monad MonadicTC ElementT)
+		=> TypeP (forall ElementT: Type: TypeP ElementT -> TypeP (Monad MonadicTC ElementT))
+		= forall ElementT: Type: TypeP ElementT -> TypeP (Monad MonadicTC ElementT)
+
+	pub class Monad MonadicTC: MonadConstructor MonadicTC, EncapsulatedT: Type
+
+	mod monad {
+
+		pub spec(MonadicTC: MonadConstructor MonadicTC, EncapsulatedT: Type, ReturnT: Type) map:
+			+monadic: Monad MonadicTC EncapsulatedT, mapping: EncapsulatedT -> ReturnT
+			=> MonadicTC ReturnT
+
+		pub spec(MonadicTC: MonadConstructor MonadicTC, EncapsulatedT: Type, ReturnEncapsulatedT: Type) mapj:
+			+monadic: Monad MonadicTC EncapsulatedT, mapping: EncapsulatedT -> MonadicTC ReturnEncapsulatedT
+			=> MonadicTC ReturnEncapsulatedT
+
+		pub spec(MonadicTC: MonadConstructor MonadicTC, LeftEncapsulatedT: Type, RightEncapsulatedT: Type) seqr:
+			+left: Monad MonadicTC LeftEncapsulatedT, right: MonadicTC RightEncapsulatedT
+			=> MonadicTC RightEncapsulatedT
+			= mapj left (\_ = right)
+
+		pub spec(MonadicTC: MonadConstructor MonadicTC, LeftEncapsulatedT: Type, RightEncapsulatedT: Type) seql:
+			+left: Monad MonadicTC LeftEncapsulatedT, right: MonadicTC RightEncapsulatedT
+			=> MonadicTC LeftEncapsulatedT
+			= mapj left (\result = map right (\_ = result))
+
+	}
+
+	pub oper(MonadicTC: MonadConstructor MonadicTC, EncapsulatedT: Type, ReturnT: Type):
+		"infixMap" {monadic: Monad MonadicTC EncapsulatedT} `<$>` {mapping: EncapsulatedT -> ReturnT}
+		= monad.map monadic mapping
 
 }
