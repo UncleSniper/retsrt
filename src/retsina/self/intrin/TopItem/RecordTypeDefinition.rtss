@@ -1,0 +1,36 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type RecordTypeDefinition < CompoundTypeDefinition {
+		pub members: List CompoundTypeMember
+		pub clauses: List CompoundTypeClause
+	}
+	rend: `type`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[local: `#`]?
+			[name: MemberName]
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			([explicitParameters: ParameterDefinition] /? `,`)
+			(`<=` [capture: ParameterDefinition])?
+			(`<` ([supertypes: Expression] / `,`))?
+			(`{` [members: CompoundTypeMember]* `}`)?
+			[clauses: CompoundTypeClause]*
+		= new RecordTypeDefinition {
+			Exposition {
+				local = local.just?
+			},
+			CompoundTypeDefinition {
+				implicitParameters = implicitParameters or [],
+				name = name,
+				transforms = transforms or [],
+				explicitParameters = explicitParameters,
+				capture = capture,
+				supertypes = supertypes or []
+			},
+			members = members or [],
+			clauses = clauses
+		}
+
+}

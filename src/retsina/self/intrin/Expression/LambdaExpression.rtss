@@ -1,0 +1,17 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type LambdaExpression < Expression {
+		pub parameters: List ParameterDefinition
+		pub returnType: Maybe Expression
+		pub body: Expression
+	}
+	rend: `\`
+			[parameters: ParameterDefinition / `,`]
+			(`=>` [returnType: Expression])?
+			`=` [body: Expression]
+		= LambdaExpression parameters returnType body
+
+}

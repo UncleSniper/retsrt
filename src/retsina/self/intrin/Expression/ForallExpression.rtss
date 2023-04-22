@@ -1,0 +1,18 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type ForallBinding {
+		pub name: MemberName
+		pub typeConstraint: Expression
+	}
+	rend: [name: MemberName] `:` [typeConstraint: Expression] = ForallBinding name typeConstraint
+
+	pub type ForallExpression < Expression {
+		pub bindings: List LetBinding
+		pub body: Expression
+	}
+	rend: `forall` ([bindings: ForallBinding] / `,`) `:` [body: Expression] = ForallExpression bindings body
+
+}

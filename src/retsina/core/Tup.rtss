@@ -1,0 +1,78 @@
+provide retsina.core.Tup
+__intrin
+
+pub mod retsina::core {
+
+	pub type Tup[leaf] LeftT: TypeBound, RightT: TypeBound {
+		pub first: LeftT
+		pub rest: RightT
+	}
+
+	pub mod tuple {
+
+		pub spec components: +typeBound: TypeBound => Maybe (Tup TypeBound TypeBound) = None
+
+		pub spec(LeftT: TypeBound, RightT: TypeBound): typeBound: TypeP (Tup LeftT RightT)
+			<- components
+			=> Maybe (Tup TypeBound TypeBound)
+			= Just (Tup LeftT RightT)
+
+		pub fun componentCount typeBound: TypeBound => msize
+			= let
+				fun tcc t: TypeBound, acc: msize => msize
+					= let m: Maybe (Tup TypeBound TypeBound) = components t
+					in if m.just? then tcc m.unwrap!.rest acc.succ else acc.succ,
+				tm: Maybe (Tup TypeBound TypeBound) = components typeBound
+			in if tm.just? then tcc m.unwrap!.rest 1z else 0z
+
+		pub fun componentTypeAt typeBound: TypeBound, index: msize => TypeBound
+			= let
+				fun tcta t: TypeBound, rest: msize => TypeBound
+					= let m: Maybe (Tup TypeBound TypeBound) = components t
+					in if m.just?
+					then (if rest == 0z then m.unwrap!.first else tcta m.unwrap!.rest rest.pred)
+					else (if rest == 0z then t else raise TupleIndexOutOfBoundsError index typeBound)
+				tm: Maybe (Tup TypeBound TypeBound) = components typeBound
+			in if tm.just?
+			then (if index == 0z then tm.unwrap!.first else tcta m.unwrap!.rest index.pred)
+			else raise TupleIndexOutOfBoundsError index typeBound
+
+		pub fun(LeftT: TypeBound, RightT: TypeBound) at
+			tuple: Tup LeftT RightT,
+			index: msize
+			=> DPair TypeBound id
+			= let
+				fun indep tt: Tup TypeBound TypeBound => TypeBound = Tup tt.first tt.rest
+				fun dpat t: DPair (Tup TypeBound TypeBound) indep, rest: msize => DPair TypeBound id
+					= let m: Maybe (Tup TypeBound TypeBound) = components t.left.rest
+					in if rest == 0z then (t.left.first,, t.right.first)
+					elif m.just?  then dpat (m.unwrap!,, t.right.rest) rest.pred
+					elif rest == 1z then (t.left.rest,, t.right.rest)
+					else raise TupleIndexOutOfBoundsError index (Tup LeftT RightT)
+			in dpat ((LefT, RighT),, tuple) index
+
+		pub fun(LeftT: TypeBound, RightT: TypeBound) componentAt
+			tuple: Tup LeftT RightT,
+			index: msize
+			=> (at tuple index).left
+			= (at tuple index).right
+
+		pub oper(LeftT: TypeBound, RightT: TypeBound) postfixComponentAt => (at tuple index).left:
+			{tuple: Tup LeftT RightT} `[` {index: msize} `]`
+			= (at tuple index).right
+
+		pub type TupleIndexOutOfBoundsError < IndexOutOfBoundsError msize {
+			pub tupleType: TypeBound
+		}
+		new: index: msize, tupleType: TypeBound = new TupleIndexOutOfBoundsError {
+			IndexOutOfBoundsError {
+				lbound = 0z,
+				ubound = componentCount tupleType,
+				index = index
+			},
+			tupleType = tupleType
+		}
+
+	}
+
+}

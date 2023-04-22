@@ -1,0 +1,19 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type ModuleDefinition < Exposition {
+		pub name: List MemberName
+		pub items: List TopItem
+	}
+	rend: `mod` ([name: MemberName] / `::`) `{` [items: TopItem]* `}`
+		= new ModuleDefinition {
+			Exposition {
+				local = false
+			},
+			name = name,
+			items = items
+		}
+
+}

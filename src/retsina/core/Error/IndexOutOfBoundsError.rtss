@@ -1,0 +1,12 @@
+provide +retsina.core.Error
+__intrin
+
+pub mod retsina::core {
+
+	pub type IndexOutOfBoundsError IndexT: TypeP (<= Integral) < Error {
+		pub lbound: Maybe IndexT
+		pub ubound: Maybe IndexT
+		pub index: IndexT
+	}
+
+}

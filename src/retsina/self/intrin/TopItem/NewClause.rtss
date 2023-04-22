@@ -1,0 +1,22 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type NewClause < FacetlessCompoundTypeClause {
+		pub implicitParameters: List ParameterDefinition
+		pub name: Maybe MemberName
+		pub transforms: List Expression
+		pub explicitParameters: List ParameterDefinition
+		pub body: Expression
+	}
+	rend: `new`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[name: MemberName]?
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			`:`
+			([explicitParameters: ParameterDefinition] /? `,`)
+			`=` [body: Expression]
+		= NewClause (implicitParameters or []) name (transforms or []) explicitParameters body
+
+}

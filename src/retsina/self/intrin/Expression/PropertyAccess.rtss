@@ -1,0 +1,17 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type PropertyAccess < NamedAccess {
+		base: Expression
+	}
+	rend: [base: Expression] `.` [name: MemberName]
+		= new PropertyAccess {
+			NamedAccess {
+				name = name
+			},
+			base = base
+		}
+
+}

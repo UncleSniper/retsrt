@@ -1,0 +1,14 @@
+provide retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type Expression
+
+	pub type NamedAccess < Expression {
+		pub name: MemberName
+	}
+
+	pub type ControlStructure < Expression
+
+}

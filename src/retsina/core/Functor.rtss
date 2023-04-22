@@ -1,0 +1,36 @@
+provide retsina.core.Functor
+__intrin
+
+pub mod retsina::core {
+
+	pub type Functor <= StructureP: forall EncapsulatedT: TypeBound:
+			TypeBoundP EncapsulatedT -> TypeBoundP (StructureP EncapsulatedT) {
+		pub map: forall OldT: TypeBound, NewT: TypeBound: (OldT -> NewT) -> StructureP OldT -> StructureP NewT
+		pub subst: forall: OldT: TypeBound, NewT: TypeBound: NewT -> StructureP OldT -> StructureP NewT
+	}
+
+	pub mod functor {
+
+		pub fun(StructureP: Functor, OldT: TypeBound, NewT: TypeBound) map
+			transform: OldT -> NewT,
+			structure: StructureP OldT
+			=> StructureP NewT
+			= StructureP.map transform structure
+
+		pub fun(StructureP: Functor, OldT: TypeBound, NewT: TypeBound) subst
+			replacement: NewT,
+			structure: StructureP OldT
+			=> StructureP NewT
+			= StructureP.subst replacement structure
+
+		pub oper(StructureP: Functor, OldT: TypeBound, NewT: TypeBound) infixMap => StructureP NewT:
+			{transform: OldT -> NewT} `<$>` {structure: StructureP OldT}
+			= StructureP.map transform structure
+
+		pub oper(StructureP: Functor, OldT: TypeBound, NewT: TypeBound) infixSubst => StructureP NewT:
+			{structure: StructureP OldT} `$>` {replacement: NewT}
+			= StructureP.subst replacement structure
+
+	}
+
+}

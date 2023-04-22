@@ -1,0 +1,37 @@
+provide retsina.core.Applicative
+__intrin
+
+pub mod retsina::core {
+
+	pub type Applicative <= StructureP: forall EncapsulatedT: TypeBound:
+			TypeBoundP EncapsulatedT -> TypeBoundP (StructureP EncapsulatedT)
+			< Functor {
+		pub pure: forall EncapsulatedT: TypeBound: EncapsulatedT -> StructureP EncapsulatedT
+		pub apply: forall OldT: TypeBound, NewT: TypeBound:
+			StructureP (OldT -> NewT) -> StructureP OldT -> StructureP NewT
+	}
+
+	pub mod applicative {
+
+		pub fun(StructureP: Applicative, EncapsulatedT: TypeBound) pure
+			encapsulated: EncapsulatedT
+			=> StructureP EncapsulatedT
+			= StructureP.pure encapsulated
+
+		pub fun(StructureP: Applicative, OldT: TypeBound, NewT: TypeBound) apply
+			transform: StructureP (OldT -> NewT),
+			structure: StructureP OldT
+			=> StructureP NewT
+			= StructureP.apply transform structure
+
+		pub oper(StructureP: Applicative, EncapsulatedT: TypeBound) prefixPure => StructureP EncapsulatedT:
+			`^` {encapsulated: EncapsulatedT}
+			= StructureP.pure encapsulated
+
+		pub oper(StructureP: Applicative, OldT: TypeBound, NewT: TypeBound) infixApply => StructureP NewT:
+			{transform: StructureP (OldT -> NewT)} `<*>` {structure: StructureP OldT}
+			= StructureP.apply transform structure
+
+	}
+
+}

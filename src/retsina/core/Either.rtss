@@ -1,0 +1,30 @@
+provide retsina.core.Either
+__intrin
+
+pub mod retsina::core {
+
+	pub class Either[leaf] LeftT: TypeBound, RightT: TypeBound {
+		pub spec left! => LeftT
+		pub spec right! => RightT
+		pub spec left? => bool
+		pub alias right?: bool = not it.left?
+	}
+
+	pub type Left[leaf] LeftT: TypeBound, RightT: TypeBound < Either LeftT RightT {
+		pub left: LeftT
+		pub spec <- left! => LeftT = it.left
+		pub spec <- right! => RightT = raise NotARightError
+		pub spec <- left? => bool = true
+	}
+
+	pub type Right[leaf] LeftT: TypeBound, RightT: TypeBound < Either LeftT RightT {
+		pub right: RightT
+		pub spec <- left! => LeftT = raise NotALeftError
+		pub spec <- right! => RightT = it.right
+		pub spec <- left? => bool = false
+	}
+
+	pub type NotALeftError < Error
+	pub type NotARightError < Error
+
+}

@@ -1,0 +1,34 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type FunctionDefintion < Exposition {
+		pub implicitParameters: List ParameterDefinition
+		pub name: MemberName
+		pub transforms: List Expression
+		pub explicitParameters: List ParameterDefinition
+		pub returnType: Maybe Expression
+		pub body: Expression
+	}
+	rend: `fun`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[local: `#`]?
+			[name: MemberName]
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			([explicitParameters: ParameterDefinition] /? `,`)
+			(`=>` [returnType: Expression])?
+			`=` [body: Expression]
+		= new FunctionDefintion {
+			Exposition {
+				local = local.just?
+			},
+			implicitParameters = implicitParameters or [],
+			name = name,
+			transforms = transforms or [],
+			explicitParameters = explicitParameters,
+			returnType = returnType,
+			body = body
+		}
+
+}

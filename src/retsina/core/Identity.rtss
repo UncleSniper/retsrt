@@ -1,0 +1,22 @@
+provide retsina.core.Identity
+__intrin
+
+pub mod retsina::core {
+
+	pub fun(TrueEncapsulatedT: TypeBound) Identity
+		EncapsulatedT: TypeBoundP TrueEncapsulatedT
+		=> TypeBoundP (Identity TrueEncapsulatedT)
+		= EncapsulatedT
+	satisfies Monad {
+		Applicative {
+			Functor {
+				map = call,
+				subst = const
+			},
+			pure = id,
+			apply = call
+		},
+		mapj = call
+	}
+
+}

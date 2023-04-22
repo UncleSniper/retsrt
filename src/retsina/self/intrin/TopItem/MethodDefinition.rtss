@@ -1,0 +1,36 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type MethodDefinition < Exposition {
+		pub implicitParameters: List ParameterDefinition
+		pub name: MemberName
+		pub transforms: List Expression
+		pub explicitParameters: List MethodParameterDefinition
+		pub generalization: Maybe Expression
+		pub returnType: Maybe Expression
+		pub body: Maybe Expression
+	}
+	rend: `spec`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			([local: `#`]? [name: MemberName])?
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			`:` ([explicitParameters: MethodParameterDefinition / `,`])
+			(`<-` [generalization: Expression])?
+			(`=>` [returnType: Expression])?
+			(`=` [body: Expression])?
+		= new MethodDefinition {
+			Exposition {
+				local = (local or None).just?
+			},
+			implicitParameters = implicitParameters or [],
+			name = name,
+			transforms = transforms or [],
+			explicitParameters = explicitParameters,
+			generalization = generalization,
+			returnType = returnType,
+			body = body
+		}
+
+}

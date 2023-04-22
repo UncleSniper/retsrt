@@ -1,0 +1,51 @@
+provide retsina.core.Maybe
+__intrin
+
+pub mod retsina::core {
+
+	pub class MaybeMT[leaf] OtherMonadP: Monad, ElementT: TypeBound {
+		pub spec unwrap! => ElementT
+		pub spec just? => bool
+		pub alias none?: bool = not it.just?
+	}
+	satisfies Monad {
+		Applicative {
+			Functor {
+				map = TODO,
+				subst = TODO
+			},
+			pure = TODO,
+			apply = TODO
+		},
+		mapj = TODO
+	}
+	satisfies MonadTrans {
+		liftMT = TODO
+	}
+
+	pub alias Maybe = MaybeMT Identity
+
+	pub type JustMT[leaf] OtherMonadP: Monad, ElementT: TypeBound < MaybeMT OtherMonadP ElementT {
+		pub unwrap: ElementT
+		pub spec <- unwrap! => ElementT = it.unwrap
+		pub spec <- just? => bool = true
+	}
+
+	pub alias Just = JustMT Identity
+
+	pub type NoneMT[leaf] OtherMonadP: Monad, ElementT: TypeBound < MaybeMT OtherMonadP ElementT {
+		pub spec <- unwrap! => ElementT = raise NotAJustError
+		pub spec <- just? => bool = false
+	}
+
+	pub alias None = NoneMT Identity
+
+	pub type NotAJustError < Error
+
+	pub mod maybe {
+
+		TODO: monad stuff above, `or`
+
+	}
+
+}

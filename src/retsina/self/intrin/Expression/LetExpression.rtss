@@ -1,0 +1,37 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type LetBinding {
+		pub name: MemberName
+	}
+
+	pub type ConstantLetBinding < LetBinding {
+		pub typeConstraint: Maybe Expression
+		pub value: Expression
+	}
+	rend: [name: MemberName] (`:` [typeConstraint: Expression])? `=` [value: Expression]
+		= ConstantLetBinding name typeConstraint value
+
+	pub type FunctionLetBinding < LetBinding {
+		pub implicitParameters: List ParameterDefinition
+		pub explicitParameters: List ParameterDefinition
+		pub returnType: Maybe Expression
+		pub body: Expression
+	}
+	rend: `fun`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[name: MemberName]
+			([explicitParameters: ParameterDefinition] /? `,`)
+			(`=>` [returnType: Expression])?
+			`=` [body: Expression]
+		= FunctionLetBinding name (implicitParameters or []) explicitParameters returnType body
+
+	pub type LetExpression < ControlStructure {
+		pub bindings: List LetBinding
+		pub body: Expression
+	}
+	rend: `let` ([bindings: LetBinding] / `,`) `in` [body: Expression] = LetExpression bindings body
+
+}

@@ -1,0 +1,28 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type TryClause
+
+	pub type TryHandlerClause < TryClause {
+		pub name: MemberName
+		pub typeConstraint: Expression
+		pub body: Expression
+	}
+
+	pub type TakeClause < TryClause
+	rend: `take` [name: MemberName] `:` [typeConstraint: Expression] `=` [body: Expression]
+		= TakeClause name typeConstraint body
+
+	pub type CatchClause < TryClause
+	rend: `catch` [name: MemberName] `:` [typeConstraint: Expression] `=` [body: Expression]
+		= CatchClause name typeConstraint body
+
+	pub type TryExpression < ControlStructure {
+		pub body: Expression
+		pub clauses: List TryClause
+	}
+	rend: `try` [body: Expression] [clauses: TryClause]+
+
+}

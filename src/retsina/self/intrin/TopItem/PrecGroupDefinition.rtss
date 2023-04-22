@@ -1,0 +1,11 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type PrecGroupDefinition < Exposition {
+		pub name: MemberName
+	}
+	rend: `precgrp` [name: Symbol] = PrecGroupDefinition name
+
+}

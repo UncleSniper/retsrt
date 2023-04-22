@@ -1,0 +1,18 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type PrecedenceDeclaration < TopItem {
+		pub left: Expression
+		pub constraint: OrdRel
+		pub right: Expression
+	}
+	rend: `prec` [left: Expression] [c: `<`] [right: Expression]
+		= PrecedenceDeclaration left OrdRel::LESS right
+	rend: `prec` [left: Expression] ([c: `=`] | [c: `==`]) [right: Expression]
+		= PrecedenceDeclaration left OrdRel::EQUAL right
+	rend: `prec` [left: Expression] [c: `>`] [right: Expression]
+		= PrecedenceDeclaration left OrdConstr::GREATER right
+
+}

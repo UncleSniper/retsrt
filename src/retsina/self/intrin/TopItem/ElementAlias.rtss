@@ -1,0 +1,25 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type ElementAlias < Exposition {
+		pub name: Symbol
+		pub all: bool
+		pub element: Expression
+	}
+	rend: `alias`
+			[local: `#`]?
+			[name: MemberName]
+			[all: `*`]?
+			`=` [element: Expression]
+		= new ElementAlias {
+			Exposition {
+				local = local.just?
+			},
+			name = name.name,
+			all = all.just?,
+			element = element
+		}
+
+}

@@ -1,0 +1,23 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type RendClause < FacetlessCompoundTypeClause {
+		pub implicitParameters: List ParameterDefinition
+		pub local: bool
+		pub name: Maybe MemberName
+		pub transforms: List Expression
+		pub syntax: SyntaxSpec
+		pub body: Expression
+	}
+	rend: `rend`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[local: `#`]?
+			[name: MemberName]?
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			`:` [syntax: SyntaxSpec]
+			`=` [body: Expression]
+		= RendClause (implicitParameters or []) local.just? name (transforms or []) syntax body
+
+}

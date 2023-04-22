@@ -1,0 +1,24 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type Export < Exposition {
+		pub value: NamedAccess
+	}
+	rend: `export` [local: `#`]? [value: NamedAccess]
+		= new Export {
+			Exposition {
+				local = local.just?
+			},
+			value = value
+		}
+	rend: `import` [value: NamedAccess]
+		= new Export {
+			Exposition {
+				local = true
+			},
+			value = value
+		}
+
+}

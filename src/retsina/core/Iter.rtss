@@ -1,0 +1,30 @@
+provide retsina.core.Iter
+__intrin
+
+pub mod retsina::core {
+
+	pub class IterP MonadP: Monad, ElementT: TypeBound {
+		pub alias iterate: IteratorP MonadP ElementT = iter::iterate it
+	}
+
+	pub alias Iter = IterP Identity
+
+	pub class IteratorP: MonadP: Monad, ElementT: TypeBound {
+		pub alias next: Maybe (Tup ElementT (IteratorP MonadP ElementT)) = iter::next it
+	}
+
+	pub alias Iterator = IteratorP Identity
+
+	pub mod iter {
+
+		pub spec(MonadP: Monad, ElementT: TypeBound) iterate:
+			+iterable: IterP MonadP ElementT
+			=> IteratorP MonadP ElementT
+
+		pub spec(MonadP: Monad, ElementT: TypeBound) next:
+			+iterator: IteratorP MonadP ElementT
+			=> Maybe (Tup ElementT (IteratorP MonadP ElementT))
+
+	}
+
+}

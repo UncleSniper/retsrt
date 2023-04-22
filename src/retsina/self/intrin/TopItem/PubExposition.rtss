@@ -1,0 +1,11 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type PubExposition < TopItem {
+		pub exposition: Exposition
+	}
+	rend: `pub` [exposition: Exposition] = PubExposition exposition
+
+}

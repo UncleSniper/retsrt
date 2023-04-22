@@ -1,0 +1,42 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type InnerFacetInitializer
+
+	pub type FieldFacetInitializer < InnerFacetInitializer {
+		pub name: MemberName
+		pub value: Expression
+	}
+	rend: [name: MemberName] `=` [value: Expression] = FieldFacetInitializer name value
+
+	pub type FacetInitializerBody
+
+	pub type DirectFacetInitializer < FacetInitializerBody {
+		pub innerFacets: List InnerFacetInitializer
+	}
+	rend: `{` ([innerFacets: InnerFacetInitializer] /? `,`) `}` = DirectFacetInitializer innerFacets
+
+	pub type ConstructingFacetInitializer < FacetInitializerBody {
+		pub arguments: Maybe Expression
+	}
+	rend: `:` [arguments: Expression]? = ConstructingFacetInitializer arguments
+
+	pub type CopyingFacetInitializer < FacetInitializerBody {
+		pub sourceValue: Expression
+	}
+	rend: `=` [sourceValue: Expression] = CopyingFacetInitializer sourceValue
+
+	pub type FacetInitializer < InnerFacetInitializer {
+		pub definingType: Expression
+		pub body: FacetInitializerBody
+	}
+	rend: [definingType: Expression] [body: FacetInitializerBody] = FacetInitializer definingType body
+
+	pub type NewExpression < Expression {
+		pub rootFacet: FacetInitializer
+	}
+	rend: `new` [rootFacet: FacetInitializer] = NewExpression rootFacet
+
+}

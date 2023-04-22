@@ -1,0 +1,24 @@
+provide +retsina.self.intrin.TopItem
+provide retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type CompoundTypeDefinition < Exposition {
+		pub implicitParameters: List ParameterDefinition
+		pub name: MemberName
+		pub transforms: List Expression
+		pub explicitParameters: List ParameterDefinition
+		pub capture: Maybe ParameterDefinition
+		pub supertypes: List Expression
+	}
+
+	pub type CompoundTypeMember
+
+	pub type FacetlessCompoundTypeMember < CompoundTypeMember
+
+	pub type CompoundTypeClause
+
+	pub type FacetlessCompoundTypeClause < CompoundTypeClause
+
+}

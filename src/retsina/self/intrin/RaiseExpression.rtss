@@ -1,0 +1,11 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type RaiseExpression < Expression {
+		pub error: Expression
+	}
+	rend: `raise` [error: Expression] = RaiseExpression error
+
+}

@@ -1,0 +1,10 @@
+provide retsina.core.TypeConstraint
+__intrin
+
+pub mod retsina::core {
+
+	pub class TypeConstraint < TypeBound
+
+	pub class TypeConstraintP Self: TypeConstraint < TypeBoundP Self
+
+}

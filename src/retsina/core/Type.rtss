@@ -1,0 +1,10 @@
+provide retsina.core.Type
+__intrin
+
+pub mod retsina::core {
+
+	pub class Type < TypeConstraint
+
+	pub class TypeP Self: Type < TypeConstraintP Self
+
+}

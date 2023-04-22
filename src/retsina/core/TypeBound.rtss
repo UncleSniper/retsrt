@@ -1,0 +1,10 @@
+provide retsina.core.TypeBound
+__intrin
+
+pub mod retsina::core {
+
+	pub class TypeBound
+
+	pub class TypeBoundP Self: TypeBound < TypeBound
+
+}

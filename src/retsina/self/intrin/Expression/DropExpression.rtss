@@ -1,0 +1,11 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type DropExpression < Expression {
+		pub error: Expression
+	}
+	rend: `drop` [error: Expression] = DropExpression error
+
+}

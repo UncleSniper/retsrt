@@ -1,0 +1,13 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type AssociativityDeclaration < TopItem {
+		pub operator: Expression
+		pub right?: bool
+	}
+	rend: `assoc` ([dir: `<`] | [dir: `>`]) [operator: Expression]
+		= AssociativityDeclaration operator (dir.value == ">")
+
+}

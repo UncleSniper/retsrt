@@ -1,0 +1,12 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type BeingExpression < Expression {
+		pub subject: Expression
+		pub typeConstraint: Expression
+	}
+	rend: [subject: Expression] `being` [typeConstraint: Expression] = BeingExpression subject typeConstraint
+
+}

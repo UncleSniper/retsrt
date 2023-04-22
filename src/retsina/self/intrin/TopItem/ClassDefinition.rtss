@@ -1,0 +1,36 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type ClassDefinition < CompoundTypeDefinition {
+		pub members: List FacetlessCompoundTypeMember
+		pub clauses: List FacetlessCompoundTypeClause
+	}
+	rend: `class`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[local: `#`]?
+			[name: MemberName]
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			([explicitParameters: ParameterDefinition] /? `,`)
+			(`<=` [capture: ParameterDefinition])?
+			(`<` ([supertypes: Expression] / `,`))?
+			(`{` [members: FacetlessCompoundTypeMember]* `}`)?
+			[clauses: FacetlessCompoundTypeClause]*
+		= new ClassDefinition {
+			Exposition {
+				local = local.just?
+			},
+			CompoundTypeDefinition {
+				implicitParameters = implicitParameters or [],
+				name = name,
+				transforms = transforms or [],
+				explicitParameters = explicitParameters,
+				capture = capture,
+				supertypes = supertypes or []
+			},
+			members = members or [],
+			clauses = clauses
+		}
+
+}

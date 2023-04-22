@@ -1,0 +1,41 @@
+provide retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type TopItem
+
+	pub type Exposition < TopItem {
+		pub local: bool
+	}
+
+	pub type MemberName
+
+	pub type PlainMemberName < MemberName {
+		pub name: Symbol
+	}
+	rend: [name: Symbol] = PlainMemberName name
+
+	pub type IndirectMemberName < MemberName {
+		pub: value: Expression
+	}
+	rend: `$` [value: Expression] = IndirectMemberName value
+
+	pub type MethodParameterDefinition
+
+	pub type ParameterDefinition < MethodParameterDefinition {
+		pub name: MemberName
+		pub transforms: List Expression
+		pub typeConstraint: Maybe Expression
+	}
+	rend: [name: MemberName]
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			(`:` [typeConstraint: Expression])?
+		= ParameterDefinition name (transforms or []) typeConstraint
+
+	pub type SpecializingParameterDefinition < MethodParameterDefinition {
+		pub parameter: ParameterDefinition
+	}
+	rend: `+` [parameter: ParameterDefinition] = SpecializingParameterDefinition parameter
+
+}

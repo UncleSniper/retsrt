@@ -1,0 +1,28 @@
+provide +retsina.self.intrin.TopItem
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type ConstantDefinition < Exposition {
+		pub name: MemberName
+		pub transforms: List Expression
+		pub typeConstraint: Maybe Expression
+		pub value: Expression
+	}
+	rend: `val`
+			[local: `#`]?
+			[name: MemberName]
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			(`:` [typeConstraint: Expression])?
+			`=` [value: Expression]
+		= new ConstantDefinition {
+			Exposition {
+				local = local.just?
+			},
+			name = name,
+			transforms = transforms or [],
+			typeConstraint = typeConstraint,
+			value = value
+		}
+
+}

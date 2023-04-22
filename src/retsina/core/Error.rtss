@@ -1,0 +1,8 @@
+provide retsina.core.Error
+__intrin
+
+pub mod retsina::core {
+
+	pub type Error
+
+}

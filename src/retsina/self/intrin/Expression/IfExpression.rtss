@@ -1,0 +1,20 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type IfBranch {
+		pub condition: Expression
+		pub body: Expression
+	}
+
+	pub type IfExpression < ControlStructure {
+		pub branches: List IfBranch
+		pub fallback: Expression
+	}
+	rend: `if` [hc: Expression] `then` [hb: Expression]
+			(`elif` [tc: Expression] `then` [tb: Expression])*
+			`else` [fallback: Expression]
+		= IfExpression (IfBranch hc hb >| zip IfBranch tc tb) fallback
+
+}

@@ -1,0 +1,27 @@
+provide retsina.core.TypeBound
+__intrin
+
+pub mod retsina::core {
+
+	pub type Symbol {
+		pub location: Maybe Location
+		pub value: String
+	}
+	new: location: Maybe Location, value: String = new Symbol {
+			location = location,
+			value = value
+		}
+	new: location: Location, value: String = new Symbol {
+			location = Just location,
+			value = value
+		}
+	new: location: value: String = new Symbol {
+			location = None,
+			value = value
+		}
+
+	pub type QuotedSymbol {
+		pub symbol: Symbol
+	}
+
+}

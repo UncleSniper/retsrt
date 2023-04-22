@@ -1,0 +1,35 @@
+provide +retsina.self.intrin.TopItem
+require retsina.self.intrin.Grammar
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type OperatorDefinition < Exposition {
+		pub implicitParameters: List ParameterDefinition
+		pub name: Maybe MemberName
+		pub transforms: List Expression
+		pub returnType: Maybe Expression
+		pub syntax: SyntaxSpec
+		pub body: Expression
+	}
+	rend: `oper`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[local: `#`]?
+			[name: MemberName]?
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			(`=>` [returnType: Expression])?
+			`:` [syntax: SyntaxSpec]
+			`=` [body: Expression]
+		= new OperatorDefinition {
+			Exposition {
+				local = local.just?
+			},
+			implicitParameters = implicitParameters or [],
+			name = name,
+			transforms = transforms or [],
+			returnType = returnType,
+			syntax = syntax,
+			body = body
+		}
+
+}

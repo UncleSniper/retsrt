@@ -1,0 +1,17 @@
+provide retsina.core.Fun
+__intrin
+
+pub mod retsina::core {
+
+	pub class Fun ArgumentT: TypeBound, ReturnT: TypeBound
+
+	pub oper(ArgumentT: TypeBound, ReturnT: TypeBound) call => ReturnT:
+		{morphism: ArgumentT -> ReturnT} `$` {argument: ArgumentT}
+		= morphism argument
+
+	pub fun(ConstantT: TypeBound, IgnoredT: TypeBound) const
+		constant: ConstantT
+		=> IgnoredT -> ConstantT
+		= \_: IgnoredT => ConstantT = constant
+
+}

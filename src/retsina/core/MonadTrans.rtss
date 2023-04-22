@@ -1,0 +1,20 @@
+provide retsina.core.MonadTrans
+__intrin
+
+pub mod retsina::core {
+
+	pub type MonadTrans <= TransformP: Monad -> Monad {
+		pub liftMT: forall SourceMonadP: Monad, EncapsulatedT: TypeBound:
+			SourceMonadP EncapsulatedT -> TransformP SourceMonadP EncapsulatedT
+	}
+
+	pub mod monad {
+
+		pub fun(TransformP: MonadTrans, SourceMonadP: Monad, EncapsulatedT: TypeBound) liftMT
+			source: SourceMonadP EncapsulatedT
+			=> TransformP SourceMonadP EncapsulatedT
+			= TransformP.liftMT source
+
+	}
+
+}

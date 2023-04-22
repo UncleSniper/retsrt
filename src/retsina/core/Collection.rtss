@@ -1,0 +1,47 @@
+provide retsina.core.Collection
+__intrin
+
+pub mod retsina::core {
+
+	pub class CollectionMT OtherMonadP: Monad, ElementT: TypeBound {
+		pub alias clear: CollectionMT OtherMonadP ElementT = collection::clear it
+	}
+	satisfies Monad {
+		Applicative {
+			Functor {
+				map = TODO,
+				subst = TODO
+			},
+			pure = TODO,
+			apply = TODO
+		},
+		mapj = TODO
+	}
+	satisfies MonadTrans {
+		liftMT = TODO
+	}
+
+	pub alias Collection = CollectionMT Identity
+
+	pub mod collection {
+
+		pub spec(OtherMonadP: Monad, ElementT: TypeBound) clear:
+			+collection: CollectionMT OtherMonadP ElementT
+			=> CollectionMT OtherMonadP ElementT
+
+		pub spec(OtherMonadP: Monad, ElementT: TypeBound) add:
+			+collection: CollectionMT OtherMonadP ElementT,
+			element: ElementT
+			=> CollectionMT OtherMonadP ElementT
+
+		pub fun(OtherMonadP: Monad, OldElementT: TypeBound, NewElementT: TypeBound) map
+			transform: OldElementT -> NewElementT,
+			collection: CollectionMT OtherMonadP OldElementT
+			=> CollectionMT OtherMonadP NewElementT
+			= let
+				fun mapCollect TODO
+			in TODO
+
+	}
+
+}

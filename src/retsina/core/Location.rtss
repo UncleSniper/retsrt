@@ -1,0 +1,14 @@
+provide retsina.core.TypeBound
+__intrin
+
+pub mod retsina::core {
+
+	pub type LocationP FileT: TypeBound, OffsetT: TypeBound {
+		pub file: FileT
+		pub line: OffsetT
+		pub column: OffsetT
+	}
+
+	pub alias Location = LocationP String uint
+
+}

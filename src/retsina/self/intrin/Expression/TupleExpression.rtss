@@ -1,0 +1,11 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type TupleExpression < Expression {
+		pub components: List Expression
+	}
+	rend: `(` [head: Expression] (`,` [tail: Expression])+ `)` = TupleExpression (head >| tail)
+
+}

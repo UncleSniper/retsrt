@@ -1,0 +1,43 @@
+provide retsina.self.intrin.Grammar
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type SyntaxSpec
+
+	pub type SequenceSyntax < SyntaxSpec {
+		pub parts: List SyntaxSpec
+	}
+	rend: [head: SyntaxSpec] [tail: SyntaxSpec]+ = SequenceSyntax (head >| tail)
+
+	pub type RepetitionSyntax < SyntaxSpec {
+		pub subject: SyntaxSpec
+		pub allowEmpty?: bool
+	}
+	rend: [subject: SyntaxSpec] ([symbol: `*`] | [symbol: `+`]) = RepetitionSyntax subject (symbol.value == "*")
+
+	pub type OptionSyntax < SyntaxSpec {
+		pub subject: SyntaxSpec
+	}
+	rend: [subject: SyntaxSpec] `?` = OptionSyntax subject
+
+	pub type ChoiceSyntax < SyntaxSpec {
+		pub choices: SyntaxSpec
+	}
+	rend: [head: SyntaxSpec] (`|` [tail: SyntaxSpec])+ = ChoiceSyntax (head >| tail)
+
+	pub type TerminalSyntax < SyntaxSpec {
+		pub symbol: Symbol
+	}
+	rend: [symbol: QuotedSymbol] = TerminalSyntax symbol.symbol
+
+	pub type NonTerminalSyntax < SyntaxSpec {
+		pub name: Symbol
+		pub typeConstraint: Maybe Expression
+		pub allowExpression?: bool
+	}
+	rend: `{` [name: Symbol] (`:` [typeConstraint: Expression])? `}` = NonTerminalSyntax name typeConstraint true
+	rend: `[` [name: Symbol] (`:` [typeConstraint: Expression])? `]` = NonTerminalSyntax name typeConstraint false
+	rend: [name: Symbol] = NonTerminalSyntax name None true
+
+}

@@ -1,0 +1,21 @@
+provide retsina.core.DPair
+__intrin
+
+pub mod retsina::core {
+
+	pub type DPair[leaf] LeftT: TypeBound, RightP: LeftT -> TypeBound {
+		pub left: LeftT
+		#right: __anything
+		pub fun right => RightP it.left = it.right __reinterpret_as RightP it.left
+	}
+	rend: `(` {left: LeftT} `,,` {right: RightP left} `)` = new DPair LeftT RightP {
+			left = left,
+			right = right __reinterpret_as __anything
+		}
+	rend: `(` {left: LeftT} `=>` {RightP: LeftT -> TypeBound} `,,` {right: RightP left} `)`
+		= new DPair LeftT RightP {
+			left = left,
+			right = right __reinterpret_as __anything
+		}
+
+}

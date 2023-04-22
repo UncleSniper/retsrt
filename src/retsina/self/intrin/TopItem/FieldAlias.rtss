@@ -1,0 +1,20 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type FieldAlias < FacetlessCompoundTypeMember {
+		pub public: bool
+		pub local: bool
+		pub name: MemberName
+		pub typeConstraint: Maybe Expression
+		pub value: Expression
+	}
+	rend: [public: `pub`]? `alias`
+			[local: `#`]?
+			[name: MemberName]
+			(`:` [typeConstraint: Expression])?
+			`=` [value: Expression]
+		= FieldAlias public.just? local.just? name typeConstraint value
+
+}

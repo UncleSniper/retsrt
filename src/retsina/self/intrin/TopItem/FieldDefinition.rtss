@@ -1,0 +1,15 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type FieldDefinition < CompoundTypeMember {
+		pub public: bool
+		pub local: bool
+		pub name: MemberName
+		pub typeConstraint: Maybe Expression
+	}
+	rend: [public: `pub`]? [local: `#`]? [name: MemberName] (`:` [typeConstraint: Expression])?
+		= FieldDefinition public.just? local.just? name typeConstraint
+
+}

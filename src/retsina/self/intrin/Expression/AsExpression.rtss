@@ -1,0 +1,12 @@
+provide +retsina.self.intrin.Expression
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type AsExpression < Expression {
+		pub subject: Expression
+		pub typeConstraint: Expression
+	}
+	rend: [subject: Expression] `as` [typeConstraint: Expression] = AsExpression subject typeConstraint
+
+}

@@ -1,0 +1,35 @@
+provide +retsina.self.intrin.TopItem.CompoundTypeDefinition
+__intrin
+
+pub mod retsina::self::intrin {
+
+	pub type MemberFunctionDefintion < FacetlessCompoundTypeMember {
+		pub public: bool
+		pub local: bool
+		pub implicitParameters: List ParameterDefinition
+		pub name: MemberName
+		pub transforms: List Expression
+		pub explicitParameters: List ParameterDefinition
+		pub returnType: Maybe Expression
+		pub body: Expression
+	}
+	rend: [public: `pub`]? `fun`
+			(`(` ([implicitParameters: ParameterDefinition] / `,`) `)`)?
+			[local: `#`]?
+			[name: MemberName]
+			(`[` ([transforms: Expression] / `,`) `]`)?
+			([explicitParameters: ParameterDefinition] /? `,`)
+			(`=>` [returnType: Expression])?
+			`=` [body: Expression]
+		= new MemberFunctionDefintion {
+			public = public.just?,
+			local = local.just?,
+			implicitParameters = implicitParameters or [],
+			name = name,
+			transforms = transforms or [],
+			explicitParameters = explicitParameters,
+			returnType = returnType,
+			body = body
+		}
+
+}
