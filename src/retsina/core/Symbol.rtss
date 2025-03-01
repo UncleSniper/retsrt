@@ -15,7 +15,7 @@ pub mod retsina::core {
 			location = Just location,
 			value = value
 		}
-	new: location: value: String = new Symbol {
+	new: value: String = new Symbol {
 			location = None,
 			value = value
 		}
